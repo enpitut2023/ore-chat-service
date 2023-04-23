@@ -1,0 +1,8 @@
+services:
+  ore:
+    container_name: "ore"
+    volumes:
+      - ./ore:/ore
+    build: .
+    ports:
+      - 8080:8080
