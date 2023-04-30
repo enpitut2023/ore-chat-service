@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["notch_man <miyake.kentaro0815@mokkuriko.com>"]
 description = "This is the ore-chat-service repo"
-license = "GPLv3"
+license = "GPL3"
 name = "ore"
 readme = "README.md"
 version = "0.1.0"
@@ -45,10 +45,11 @@ max-complexity = 10
 max-line-length = 79
 
 [tool.poetry.dependencies]
-python = "^3.11"
 fastapi = "^0.95.1"
+python = "^3.11"
 uvicorn = {extras = ["standard"], version = "^0.21.1"}
 websockets = "^11.0.2"
+jinja2 = "^3.1.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
