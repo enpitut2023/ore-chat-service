@@ -1,9 +1,10 @@
+# OreChatの複数クライアント対応をChatGPTにやってもらったバージョン
+
 # Standard Library
 from typing import List
 
 # Third Party Library
 from fastapi import FastAPI, Request, WebSocket
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 
@@ -24,22 +25,8 @@ class ConnectionManager:
 
 
 app = FastAPI()
-# 静的ファイルのパスを指定する
-app.mount(
-    "/static",
-    StaticFiles(directory="static"),
-    name="static",
-)
-
 templates = Jinja2Templates(directory="templates")
 manager = ConnectionManager()
-
-
-@app.get("/")
-async def get(request: Request):
-    return templates.TemplateResponse(
-        "index.jinja2.html", {"request": request}
-    )
 
 
 @app.get("/")
@@ -56,7 +43,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            await websocket.send_text(f"送ったメッセージ: {data}")
-
+            await manager.broadcast(f"Client {id(websocket)} says: {data}")
     finally:
         await manager.disconnect(websocket)
